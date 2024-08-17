@@ -1,0 +1,196 @@
+<?xml version="1.0" ?>
+<robot name="meskobot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find meskobot_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find meskobot_description)/urdf/meskobot.trans" />
+<xacro:include filename="$(find meskobot_description)/urdf/meskobot.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="-0.0003745397791516841 -0.0019631062043038374 0.03747857880265421" rpy="0 0 0"/>
+    <mass value="3.1845826352803597"/>
+    <inertia ixx="0.008692" iyy="0.008661" izz="0.011323" ixy="-1e-06" iyz="1e-06" ixz="-3.5e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="shoulder_lnk_1">
+  <inertial>
+    <origin xyz="-0.0034170207463233944 2.7576905876087326e-06 0.02356364231941202" rpy="0 0 0"/>
+    <mass value="0.7235284873939697"/>
+    <inertia ixx="0.000713" iyy="0.00077" izz="0.000508" ixy="0.0" iyz="-0.0" ixz="9.2e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.000298 0.00191 -0.084618" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/shoulder_lnk_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.000298 0.00191 -0.084618" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/shoulder_lnk_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="elbow_link_1">
+  <inertial>
+    <origin xyz="-0.034584591473885866 -6.447194784561447e-07 0.07711703890846222" rpy="0 0 0"/>
+    <mass value="0.7001849598736142"/>
+    <inertia ixx="0.00264" iyy="0.002714" izz="0.000421" ixy="0.0" iyz="0.0" ixz="-4.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.039916 0.001979 -0.145457" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/elbow_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.039916 0.001979 -0.145457" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/elbow_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wrist_link_1">
+  <inertial>
+    <origin xyz="0.029283863529470048 -4.674670304976973e-07 0.07711846866560701" rpy="0 0 0"/>
+    <mass value="0.7001675807512958"/>
+    <inertia ixx="0.00264" iyy="0.002714" izz="0.000421" ixy="0.0" iyz="-0.0" ixz="4.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.034915 0.00198 -0.292459" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/wrist_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.034915 0.00198 -0.292459" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/wrist_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wrist_link_2_1">
+  <inertial>
+    <origin xyz="-0.0330402578391799 -1.2837655753087165e-05 0.0037027269969738263" rpy="0 0 0"/>
+    <mass value="0.2335819823482167"/>
+    <inertia ixx="0.000121" iyy="0.000142" izz="0.000134" ixy="0.0" iyz="-0.0" ixz="1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.03993 0.00205 -0.43946" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/wrist_link_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.03993 0.00205 -0.43946" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/wrist_link_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wrist_link_3_1">
+  <inertial>
+    <origin xyz="0.002968813471448395 -6.430833556184557e-06 0.03825848254656666" rpy="0 0 0"/>
+    <mass value="0.27641563652891354"/>
+    <inertia ixx="0.000179" iyy="0.000204" izz="0.00016" ixy="0.0" iyz="0.0" ixz="-6e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.08043 0.00205 -0.472486" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/wrist_link_3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.08043 0.00205 -0.472486" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/wrist_link_3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="end_eff_v1_1">
+  <inertial>
+    <origin xyz="-0.0012292962244435934 0.0001913067685121012 -5.677372882928466e-07" rpy="0 0 0"/>
+    <mass value="0.08380380597924247"/>
+    <inertia ixx="1.7e-05" iyy="1.1e-05" izz="1.1e-05" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.11043 0.002051 -0.519508" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/end_eff_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.11043 0.002051 -0.519508" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://meskobot_description/meshes/end_eff_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="BJ" type="continuous">
+  <origin xyz="0.000298 -0.00191 0.084618" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="shoulder_lnk_1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+</joint>
+
+<joint name="Revolute 29" type="continuous">
+  <origin xyz="-0.040214 -6.9e-05 0.060839" rpy="0 0 0"/>
+  <parent link="shoulder_lnk_1"/>
+  <child link="elbow_link_1"/>
+  <axis xyz="-1.0 -0.0 -0.0"/>
+</joint>
+
+<joint name="Revolute 30" type="continuous">
+  <origin xyz="0.005001 -1e-06 0.147002" rpy="0 0 0"/>
+  <parent link="elbow_link_1"/>
+  <child link="wrist_link_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+</joint>
+
+<joint name="Revolute 31" type="continuous">
+  <origin xyz="-0.005015 -7e-05 0.147001" rpy="0 0 0"/>
+  <parent link="wrist_link_1"/>
+  <child link="wrist_link_2_1"/>
+  <axis xyz="-1.0 -0.0 -0.0"/>
+</joint>
+
+<joint name="Revolute 32" type="continuous">
+  <origin xyz="-0.0405 0.0 0.033026" rpy="0 0 0"/>
+  <parent link="wrist_link_2_1"/>
+  <child link="wrist_link_3_1"/>
+  <axis xyz="0.0 4e-06 -1.0"/>
+</joint>
+
+<joint name="Revolute 33" type="continuous">
+  <origin xyz="-0.03 -1e-06 0.047022" rpy="0 0 0"/>
+  <parent link="wrist_link_3_1"/>
+  <child link="end_eff_v1_1"/>
+  <axis xyz="1.0 -0.0 0.0"/>
+</joint>
+
+</robot>
