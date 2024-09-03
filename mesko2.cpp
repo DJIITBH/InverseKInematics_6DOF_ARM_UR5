@@ -241,11 +241,11 @@ Matrix pseudoInverse(const Matrix& mat) {
 void Inverse_position_kinematics(const std::vector<DHParameter>& dhParams, Matrix T){
     //****************/ robot parameters**********
     double d1 = 0.1454;
-    double d2 = 0.0352;
-    double a2 = 0.147;
-    double d3 = 0.005;
-    double a3 = 0.97;
-    double d4 = 0.0405;
+    double d2 = 0;
+    double a2 = 0.137;
+    double d3 = 0;
+    double a3 = 0.127;
+    double d4 = 0.0405+0.0352+0.005;
     double d5 = 0.08;
     double d6 = 0.03;
 
@@ -356,22 +356,25 @@ void Inverse_position_kinematics(const std::vector<DHParameter>& dhParams, Matri
     Matrix T6_43 = Inverse_Matrix(T4_63);
     Matrix T6_44 = Inverse_Matrix(T4_64);
 
-    Matrix T0_41 = multiplyMatrices(T, T4_61);
-    Matrix T0_42 = multiplyMatrices(T, T4_62);
-    Matrix T0_43 = multiplyMatrices(T, T4_63);
-    Matrix T0_44 = multiplyMatrices(T, T4_64);
+    Matrix T1_41 = multiplyMatrices(T1_61, T6_41);
+    Matrix T1_42 = multiplyMatrices(T1_61, T6_42);
+    Matrix T1_43 = multiplyMatrices(T1_62, T6_43);
+    Matrix T1_44 = multiplyMatrices(T1_61, T6_44);
 
-    Vector3 p41 = {T0_41[0][3], T0_41[1][3], T0_41[2][3] - d1};
-    Vector3 p42 = {T0_42[0][3], T0_42[1][3], T0_42[2][3] - d1};
-    Vector3 p43 = {T0_43[0][3], T0_43[1][3], T0_43[2][3] - d1};
-    Vector3 p44 = {T0_44[0][3], T0_44[1][3], T0_44[2][3] - d1};
+    Vector3 p31 = {T1_41[0][3] - d4*T1_41[0][1], T1_41[1][3] - d4*T1_41[1][1], T1_41[2][3] - d4*T1_41[2][1]};
+    Vector3 p32 = {T1_42[0][3] - d4*T1_42[0][1], T1_42[1][3] - d4*T1_42[1][1], T1_42[2][3] - d4*T1_42[2][1]};
+    Vector3 p33 = {T1_43[0][3] - d4*T1_43[0][1], T1_43[1][3] - d4*T1_43[1][1], T1_43[2][3] - d4*T1_43[2][1]};
+    Vector3 p34 = {T1_44[0][3] - d4*T1_44[0][1], T1_44[1][3] - d4*T1_44[1][1], T1_44[2][3] - d4*T1_44[2][1]};
+
 
     double val = 2*a2*a3 + a2*a2 + a3*a3;
-    if((p41[0]*p41[0] + p41[2]*p41[2])<val || (p42[0]*p42[0] + p42[2]*p42[2])<val || (p43[0]*p43[0] + p43[2]*p43[2])<val || (p44[0]*p44[0] + p44[2]*p44[2])<val)
-    {double j31 = (-(a2*a2 + a3*a3) + (p41[0]*p41[0] + p41[2]*p41[2])) / (2*(a2*a3));
-    double j32 = (-(a2*a2 + a3*a3) + (p42[0]*p42[0] + p42[2]*p42[2])) / (2*(a2*a3));
-    double j33 = (-(a2*a2 + a3*a3) + (p43[0]*p43[0] + p43[2]*p43[2])) / (2*(a2*a3));
-    double j34 = (-(a2*a2 + a3*a3) + (p44[0]*p44[0] + p44[2]*p44[2])) / (2*(a2*a3));
+    
+    if((p31[0]*p31[0] + p31[1]*p31[1] + p31[2]*p31[2])<val || (p32[0]*p32[0] + p32[1]*p32[1] + p32[2]*p32[2])<val || (p33[0]*p33[0] + p33[1]*p33[1] + p33[2]*p33[2])<val || (p34[0]*p34[0] + p34[1]*p34[1] + p34[2]*p34[2])<val)
+    {
+    double j31 = (-(a2*a2 + a3*a3) + (p31[0]*p31[0] + p31[1]*p31[1] + p31[2]*p31[2])) / (2*(a2*a3));
+    double j32 = (-(a2*a2 + a3*a3) + (p32[0]*p32[0] + p32[1]*p32[1] + p32[2]*p32[2])) / (2*(a2*a3));
+    double j33 = (-(a2*a2 + a3*a3) + (p33[0]*p33[0] + p33[1]*p33[1] + p33[2]*p33[2])) / (2*(a2*a3));
+    double j34 = (-(a2*a2 + a3*a3) + (p34[0]*p34[0] + p34[1]*p34[1] + p34[2]*p34[2])) / (2*(a2*a3));
 
     double th31 = acos(j31);
     double th32 = acos(j32);
@@ -402,12 +405,12 @@ void Inverse_position_kinematics(const std::vector<DHParameter>& dhParams, Matri
 
 int main() {
     Joint_Pose jpose;
-    jpose = {0.45,0,0.56,0.2,0.5,1.59};
+    jpose = {0.56,2.16,0.56,0.2,0.5,1.59};
     std::vector<DHParameter> dhParams = {
         {0,     PI / 2,    0.1454,    jpose.Theta_1},
-        {0.147,    0,         0.0352,      jpose.Theta_2},
-        {0.97,   0,    0.005,   jpose.Theta_3},
-        {0,      PI / 2,    0.0405,    jpose.Theta_4},
+        {0.137,    0,         0,      jpose.Theta_2},
+        {0.127,   0,    0,   jpose.Theta_3},
+        {0,      PI / 2,    0.0405+0.0352+0.005,    jpose.Theta_4},
         {0,    -PI / 2,    0.08,      jpose.Theta_5},
         {0,    0,         0.03,      jpose.Theta_6}
     };
