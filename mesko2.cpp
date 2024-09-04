@@ -242,9 +242,9 @@ void Inverse_position_kinematics(const std::vector<DHParameter>& dhParams, Matri
     //****************/ robot parameters**********
     double d1 = 0.1454;
     double d2 = 0;
-    double a2 = 0.137;
+    double a2 = 0.147;
     double d3 = 0;
-    double a3 = 0.127;
+    double a3 = 0.147;
     double d4 = 0.0405+0.0352+0.005;
     double d5 = 0.08;
     double d6 = 0.03;
@@ -393,6 +393,119 @@ void Inverse_position_kinematics(const std::vector<DHParameter>& dhParams, Matri
     cout << "th36 " << th36 << endl;
     cout << "th37 " << th37 << endl;
     cout << "th38 " << th38 << endl;
+
+    double th21 = atan2(p31[1], p31[0]) - asin((a3 * sin(th31)) / sqrt(p31[0]*p31[0] + p31[1]*p31[1] + p31[2]*p31[2]));
+    double th22 = atan2(p32[1], p32[0]) - asin((a3 * sin(th32)) / sqrt(p32[0]*p32[0] + p32[1]*p32[1] + p32[2]*p32[2]));
+    double th23 = atan2(p33[1], p33[0]) - asin((a3 * sin(th33)) / sqrt(p33[0]*p33[0] + p33[1]*p33[1] + p33[2]*p33[2]));
+    double th24 = atan2(p34[1], p34[0]) - asin((a3 * sin(th34)) / sqrt(p34[0]*p34[0] + p34[1]*p34[1] + p34[2]*p34[2]));
+    double th25 = atan2(p31[1], p31[0]) - asin((a3 * sin(th35)) / sqrt(p31[0]*p31[0] + p31[1]*p31[1] + p31[2]*p31[2]));
+    double th26 = atan2(p32[1], p32[0]) - asin((a3 * sin(th36)) / sqrt(p32[0]*p32[0] + p32[1]*p32[1] + p32[2]*p32[2]));
+    double th27 = atan2(p33[1], p33[0]) - asin((a3 * sin(th33)) / sqrt(p33[0]*p33[0] + p33[1]*p33[1] + p33[2]*p33[2]));
+    double th28 = atan2(p34[1], p34[0]) - asin((a3 * sin(th34)) / sqrt(p34[0]*p34[0] + p34[1]*p34[1] + p34[2]*p34[2]));
+
+    if(th31<-2*PI){
+        th21 = 2*PI + th21;
+    }
+
+    if(th32<-2*PI){
+        th22 = 2*PI + th22;
+    }
+
+    if(th33<-2*PI){
+        th23 = 2*PI + th23;
+    }
+
+    if(th34<-2*PI){
+        th24 = 2*PI + th24;
+    }
+    if(th35<-2*PI){
+        th25 = 2*PI + th25;
+    }
+    if(th36<-2*PI){
+        th26 = 2*PI + th26;
+    }
+    if(th37<-2*PI){
+        th27 = 2*PI + th27;
+    }
+    if(th38<-2*PI){
+        th28 = 2*PI + th28;
+    }
+
+    cout<<endl;
+    cout << "th21 " << th21 << endl;
+    cout << "th22 " << th22 << endl;
+    cout << "th23 " << th23 << endl;
+    cout << "th24 " << th24 << endl;
+    cout << "th25 " << th25 << endl;
+    cout << "th26 " << th26 << endl;
+    cout << "th27 " << th27 << endl;
+    cout << "th28 " << th28 << endl;
+
+    Matrix T1_21 = dhTransform(0.147, 0, 0, th21);
+    Matrix T1_22 = dhTransform(0.147, 0, 0, th22);
+    Matrix T1_23 = dhTransform(0.147, 0, 0, th23);
+    Matrix T1_24 = dhTransform(0.147, 0, 0, th24);
+    Matrix T1_25 = dhTransform(0.147, 0, 0, th25);
+    Matrix T1_26 = dhTransform(0.147, 0, 0, th26);
+    Matrix T1_27 = dhTransform(0.147, 0, 0, th27);
+    Matrix T1_28 = dhTransform(0.147, 0, 0, th28);
+
+    Matrix T2_31 = dhTransform(0.147, 0, 0, th31);
+    Matrix T2_32 = dhTransform(0.147, 0, 0, th32);
+    Matrix T2_33 = dhTransform(0.147, 0, 0, th33);
+    Matrix T2_34 = dhTransform(0.147, 0, 0, th34);
+    Matrix T2_35 = dhTransform(0.147, 0, 0, th35);
+    Matrix T2_36 = dhTransform(0.147, 0, 0, th36);
+    Matrix T2_37 = dhTransform(0.147, 0, 0, th37);
+    Matrix T2_38 = dhTransform(0.147, 0, 0, th38);
+
+    Matrix T1_31 = multiplyMatrices(T1_21, T2_31);
+    Matrix T1_32 = multiplyMatrices(T1_22, T2_32);
+    Matrix T1_33 = multiplyMatrices(T1_23, T2_33);
+    Matrix T1_34 = multiplyMatrices(T1_24, T2_34);
+    Matrix T1_35 = multiplyMatrices(T1_25, T2_35);
+    Matrix T1_36 = multiplyMatrices(T1_26, T2_36);
+    Matrix T1_37 = multiplyMatrices(T1_27, T2_37);
+    Matrix T1_38 = multiplyMatrices(T1_28, T2_38);
+
+    Matrix T3_11 = Inverse_Matrix(T1_31);
+    Matrix T3_12 = Inverse_Matrix(T1_32);
+    Matrix T3_13 = Inverse_Matrix(T1_33);
+    Matrix T3_14 = Inverse_Matrix(T1_34);
+    Matrix T3_15 = Inverse_Matrix(T1_35);
+    Matrix T3_16 = Inverse_Matrix(T1_36);
+    Matrix T3_17 = Inverse_Matrix(T1_37);
+    Matrix T3_18 = Inverse_Matrix(T1_38);
+
+    Matrix T3_41 = multiplyMatrices(T3_11,T1_41);
+    Matrix T3_42 = multiplyMatrices(T3_12,T1_42);
+    Matrix T3_43 = multiplyMatrices(T3_13,T1_43);
+    Matrix T3_44 = multiplyMatrices(T3_14,T1_44);
+    Matrix T3_45 = multiplyMatrices(T3_15,T1_41);
+    Matrix T3_46 = multiplyMatrices(T3_16,T1_42);
+    Matrix T3_47 = multiplyMatrices(T3_17,T1_43);
+    Matrix T3_48 = multiplyMatrices(T3_18,T1_44);
+
+    double th41 = atan2(T3_41[1][0], T3_41[0][0]);
+    double th42 = atan2(T3_42[1][0], T3_42[0][0]);
+    double th43 = atan2(T3_43[1][0], T3_43[0][0]);
+    double th44 = atan2(T3_44[1][0], T3_44[0][0]);
+    double th45 = atan2(T3_45[1][0], T3_45[0][0]);
+    double th46 = atan2(T3_46[1][0], T3_46[0][0]);
+    double th47 = atan2(T3_47[1][0], T3_47[0][0]);
+    double th48 = atan2(T3_48[1][0], T3_48[0][0]);
+
+    cout<<endl;
+    cout << "th41 " << th41 << endl;
+    cout << "th42 " << th42 << endl;
+    cout << "th43 " << th43 << endl;
+    cout << "th44 " << th44 << endl;
+    cout << "th45 " << th45 << endl;
+    cout << "th46 " << th46 << endl;
+    cout << "th47 " << th47 << endl;
+    cout << "th48 " << th48 << endl;
+
+
     }
     else{
         cout<<"***************no sol***************"<<endl;
@@ -405,11 +518,11 @@ void Inverse_position_kinematics(const std::vector<DHParameter>& dhParams, Matri
 
 int main() {
     Joint_Pose jpose;
-    jpose = {0.56,2.16,0.56,0.2,0.5,1.59};
+    jpose = {0.56,1.24,1.34,-0.9,0.5,1.59};
     std::vector<DHParameter> dhParams = {
         {0,     PI / 2,    0.1454,    jpose.Theta_1},
-        {0.137,    0,         0,      jpose.Theta_2},
-        {0.127,   0,    0,   jpose.Theta_3},
+        {0.147,    0,         0,      jpose.Theta_2},
+        {0.147,   0,    0,   jpose.Theta_3},
         {0,      PI / 2,    0.0405+0.0352+0.005,    jpose.Theta_4},
         {0,    -PI / 2,    0.08,      jpose.Theta_5},
         {0,    0,         0.03,      jpose.Theta_6}
