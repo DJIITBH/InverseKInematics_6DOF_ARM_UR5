@@ -613,22 +613,61 @@ void setup(){
 
 void loop(){
 
-    Joint_Pose jpose;
-    jpose = {0.01, 0.02, 0.03, 0.03, 0.02, 0.01};
+    // Joint_Pose jpose;
+    // jpose = {0.01, 0.02, 0.03, 0.03, 0.02, 0.01};
 
-    // Define the DH parameters
-    std::vector<DHParameter> dhParams = {
-        {0, PI / 2, 0.1454, jpose.Theta_1},
-        {0.147, 0, 0, jpose.Theta_2},
-        {0.147, 0, 0, jpose.Theta_3},
-        {0, PI / 2, 0.0405 + 0.0352 + 0.005, jpose.Theta_4},
-        {0, -PI / 2, 0.08, jpose.Theta_5},
-        {0, 0, 0.03, jpose.Theta_6}
+    // // Define the DH parameters
+    // std::vector<DHParameter> dhParams = {
+    //     {0, PI / 2, 0.1454, jpose.Theta_1},
+    //     {0.147, 0, 0, jpose.Theta_2},
+    //     {0.147, 0, 0, jpose.Theta_3},
+    //     {0, PI / 2, 0.0405 + 0.0352 + 0.005, jpose.Theta_4},
+    //     {0, -PI / 2, 0.08, jpose.Theta_5},
+    //     {0, 0, 0.03, jpose.Theta_6}
+    // };
+
+    // // Calculate the forward kinematics and transformation matrix
+    // Cart_Pose pose = forwardKinematics(dhParams);
+    // Matrix T = forwardKinematicsTransform(dhParams);
+    double x = 0.0; //give x position here
+    double y = 0.0; //give y position here
+    double z = 0.0; //give z position here
+    double roll = 0.0; //give roll angle here
+    double pitch = 0.0; //give pitch angle here
+    double yaw = 0.0;  //give yaw angle here
+    // Cart_Pose pose = {x,y,z,roll,pitch,yaw}
+
+    Matrix T = {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
     };
+    double cr = cos(roll);
+    double sr = sin(roll);
+    double cp = cos(pitch);
+    double sp = sin(pitch);
+    double cy = cos(yaw);
+    double sy = sin(yaw);
 
-    // Calculate the forward kinematics and transformation matrix
-    Cart_Pose pose = forwardKinematics(dhParams);
-    Matrix T = forwardKinematicsTransform(dhParams);
+    // Rotation matrix (upper-left 3x3)
+    T[0][0] = cy * cp;
+    T[0][1] = cy * sp * sr - sy * cr;
+    T[0][2] = cy * sp * cr + sy * sr;
+    
+    T[1][0] = sy * cp;
+    T[1][1] = sy * sp * sr + cy * cr;
+    T[1][2] = sy * sp * cr - cy * sr;
+    
+    T[2][0] = -sp;
+    T[2][1] = cp * sr;
+    T[2][2] = cp * cr;
+
+    // Translation vector (upper-right 3x1)
+    T[0][3] = x;
+    T[1][3] = y;
+    T[2][3] = z;
+
 
     // Print position
     // Serial.print("Position: (");
